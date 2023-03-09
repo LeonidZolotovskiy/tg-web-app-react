@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTelegramm } from "../hooks/useTelegramm";
 import "./Form.css";
 
@@ -8,21 +8,21 @@ export default function Form() {
   const [subject, setSubject] = useState("physical");
   const { tg } = useTelegramm();
 
-  // const onSendData = useCallback(() => {
-  //   const data = {
-  //     country,
-  //     street,
-  //     subject,
-  //   };
-  //   tg.sendData(JSON.stringify(data));
-  // }, []);
+  const onSendData = useCallback(() => {
+    const data = {
+      country,
+      street,
+      subject,
+    };
+    tg.sendData(JSON.stringify(data));
+  }, [tg, country, street, subject]);
 
-  // useEffect(() => {
-  //   tg.WebApp.onEvent("mainButtonClicked", onSendData);
-  //   return () => {
-  //     tg.WebApp.offEvent("mainButtonClicked", onSendData);
-  //   };
-  // }, []);
+  useEffect(() => {
+    tg.onEvent('mainButtonClicked', onSendData);
+    return () => {
+      tg.offEvent('mainButtonClicked', onSendData);
+    };
+  }, [tg, onSendData]);
 
   useEffect(() => {
     tg.MainButton.setParams({
