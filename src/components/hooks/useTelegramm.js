@@ -16,6 +16,6 @@ export function useTelegramm() {
     onClose,
     onToggleButton,
     tg,
-    user: tg.initDatatUnsafe?.user,
+    user: tg.initDataUnsafe?.user,
   };
 }
