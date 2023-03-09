@@ -9,7 +9,7 @@ export default function Form() {
   const { tg } = useTelegramm();
 
   useEffect(() => {
-    tg.MainButton.setParms({
+    tg.MainButton.setParams({
       text: "Отправить заявку",
     });
   }, [tg.MainButton]);
@@ -20,7 +20,7 @@ export default function Form() {
     } else {
       tg.MainButton.show();
     }
-  }, [counter, street]);
+  }, [country, street]);
 
   const onChangeCountry = (e) => {
     setCountry(e.target.value);
