@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useTelegramm } from "../hooks/useTelegramm";
 import ProductItem from "../ProductItem/ProductItem";
 import "./ProductList.css";
-import { useTelegramm } from "./components/hooks/useTelegramm";
+
 
 const products = [
   { id: 1, title: "Джинсы", price: 5000, description: "Синего цвета, прямые" },
