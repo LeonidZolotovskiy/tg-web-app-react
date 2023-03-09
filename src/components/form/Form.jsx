@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTelegramm } from "../hooks/useTelegramm";
 import "./Form.css";
 
@@ -8,6 +8,21 @@ export default function Form() {
   const [subject, setSubject] = useState("physical");
   const { tg } = useTelegramm();
 
+  const onSendData = useCallback(() => {
+    const data = {
+      country,
+      street,
+      subject,
+    };
+    tg.sendData(JSON.stringify(data));
+  }, [country, street, subject, tg]);
+
+  useEffect(() => {
+    tg.WebApp.onEvent("mainButtonClicked", onSendData);
+    return () => {
+      tg.WebApp.offEvent("mainButtonClicked", onSendData);
+    };
+  }, [onSendData, tg]);
   useEffect(() => {
     tg.MainButton.setParams({
       text: "Отправить заявку",
@@ -19,7 +34,7 @@ export default function Form() {
     } else {
       tg.MainButton.show();
     }
-  }, [country, street,tg.MainButton]);
+  }, [country, street, tg.MainButton]);
 
   const onChangeCountry = (e) => {
     setCountry(e.target.value);
