@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useTelegramm } from "../hooks/useTelegramm";
 import "./Form.css";
 
@@ -24,19 +24,19 @@ export default function Form() {
   //   };
   // }, []);
 
-  // useEffect(() => {
-  //   tg.MainButton.setParams({
-  //     text: "Отправить заявку",
-  //   });
-  // }, []);
+  useEffect(() => {
+    tg.MainButton.setParams({
+      text: "Отправить заявку",
+    });
+  }, [tg.MainButton]);
 
-  // useEffect(() => {
-  //   if (!street || !country) {
-  //     tg.MainButton.hide();
-  //   } else {
-  //     tg.MainButton.show();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!street || !country) {
+      tg.MainButton.hide();
+    } else {
+      tg.MainButton.show();
+    }
+  }, [tg.MainButton, street, country]);
 
   const onChangeCountry = (e) => {
     setCountry(e.target.value);
