@@ -13,7 +13,7 @@ export default function Form() {
       text: "Отправить заявку",
     });
   }, [tg.MainButton]);
-
+console.log();
   useEffect(() => {
     if (!street || !country) {
       tg.MainButton.hide();
