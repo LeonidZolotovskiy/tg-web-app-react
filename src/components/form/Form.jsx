@@ -8,33 +8,35 @@ export default function Form() {
   const [subject, setSubject] = useState("physical");
   const { tg } = useTelegramm();
 
-  const onSendData = useCallback(() => {
-    const data = {
-      country,
-      street,
-      subject,
-    };
-    tg.sendData(JSON.stringify(data));
-  }, [country, street, subject, tg]);
+  // const onSendData = useCallback(() => {
+  //   const data = {
+  //     country,
+  //     street,
+  //     subject,
+  //   };
+  //   tg.sendData(JSON.stringify(data));
+  // }, []);
 
-  useEffect(() => {
-    tg.WebApp.onEvent("mainButtonClicked", onSendData);
-    return () => {
-      tg.WebApp.offEvent("mainButtonClicked", onSendData);
-    };
-  }, [onSendData, tg]);
-  useEffect(() => {
-    tg.MainButton.setParams({
-      text: "Отправить заявку",
-    });
-  }, [tg.MainButton]);
-  useEffect(() => {
-    if (!street || !country) {
-      tg.MainButton.hide();
-    } else {
-      tg.MainButton.show();
-    }
-  }, [country, street, tg.MainButton]);
+  // useEffect(() => {
+  //   tg.WebApp.onEvent("mainButtonClicked", onSendData);
+  //   return () => {
+  //     tg.WebApp.offEvent("mainButtonClicked", onSendData);
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   tg.MainButton.setParams({
+  //     text: "Отправить заявку",
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   if (!street || !country) {
+  //     tg.MainButton.hide();
+  //   } else {
+  //     tg.MainButton.show();
+  //   }
+  // }, []);
 
   const onChangeCountry = (e) => {
     setCountry(e.target.value);
@@ -47,7 +49,7 @@ export default function Form() {
   };
 
   return (
-    <div calssName={"form"}>
+    <div className={"form"}>
       <h3>Введите ваши данные</h3>
       <input
         className={"input"}
