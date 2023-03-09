@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTelegramm } from "../hooks/useTelegramm";
 import ProductItem from "../ProductItem/ProductItem";
 import "./ProductList.css";
-
 
 const products = [
   { id: 1, title: "Джинсы", price: 5000, description: "Синего цвета, прямые" },
@@ -55,7 +54,29 @@ const getTotalPrice = (items = []) => {
 
 export default function ProductList() {
   const [addedItems, setAddedItems] = useState([]);
-  const { tg } = useTelegramm();
+  const { tg, queryId } = useTelegramm();
+
+  const onSendData = useCallback(() => {
+    const data = {
+      products: addedItems,
+      totalPrice: getTotalPrice(addedItems),
+      queryId
+    };
+    fetch("http://localhost:8000", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }, [addedItems,queryId]);
+
+  useEffect(() => {
+    tg.onEvent("mainButtonClicked", onSendData);
+    return () => {
+      tg.offEvent("mainButtonClicked", onSendData);
+    };
+  }, [tg, onSendData]);
   const onAdd = (product) => {
     const alreadyAdded = addedItems.find((item) => item.id === product.id);
     let newItems = [];

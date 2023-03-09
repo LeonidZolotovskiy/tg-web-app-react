@@ -6,6 +6,7 @@ export function useTelegramm() {
   };
 
   const onToggleButton = () => {
+
     if(tg.MainButton.isVisible){
         tg.MainButton.hide()
     }else{
@@ -17,5 +18,6 @@ export function useTelegramm() {
     onToggleButton,
     tg,
     user: tg.initDataUnsafe?.user,
+    queryId: tg.initDataUnsafe?.query_id,
   };
 }
